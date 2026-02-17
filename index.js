@@ -15,7 +15,6 @@ const init = () => {
     }
 };
 
-// ২. ক্যাটাগরি নিয়ে আসা
 const loadCategories = () => {
     fetch("https://fakestoreapi.com/products/categories")
         .then(res => res.json())
@@ -23,7 +22,6 @@ const loadCategories = () => {
         .catch(err => console.log(err));
 };
 
-// ৩. ক্যাটাগরি বাটন দেখানো
 const displayCategories = (categories) => {
     const container = document.getElementById("category-container");
     container.innerHTML = "";
@@ -66,7 +64,6 @@ const handleActiveBtn = (e) => {
     e.target.classList.remove("btn-outline");
 };
 
-// ৪. প্রোডাক্ট নিয়ে আসা
 const loadProducts = (isLimit) => {
     fetch("https://fakestoreapi.com/products")
         .then(res => res.json())
@@ -76,7 +73,6 @@ const loadProducts = (isLimit) => {
         });
 };
 
-// ৫. প্রোডাক্ট কার্ড দেখানো
 const displayProducts = (products) => {
     const container = document.getElementById("product-container");
     container.innerHTML = "";
