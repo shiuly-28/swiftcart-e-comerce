@@ -101,7 +101,6 @@ const displayProducts = (products) => {
     });
 };
 
-// ৬. কার্ট ও ডিটেইলস (আগের মতোই)
 const addToCart = () => {
     cartCount++;
     document.getElementById("cart-count").innerText = cartCount;
