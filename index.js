@@ -106,18 +106,56 @@ const showDetails = (id) => {
     fetch(`https://fakestoreapi.com/products/${id}`)
         .then(res => res.json())
         .then(product => {
-            const modal = document.createElement("div");
-            modal.innerHTML = `
-                <dialog id="dt_modal" class="modal modal-middle">
-                  <div class="modal-box">
-                    <img src="${product.image}" class="w-32 mx-auto mb-4">
-                    <h3 class="font-bold text-lg">${product.title}</h3>
-                    <p class="py-4 text-sm">${product.description}</p>
-                    <div class="modal-action"><form method="dialog"><button class="btn btn-error btn-sm text-white">Close</button></form></div>
+            const existingModal = document.getElementById("dt_modal_container");
+            if (existingModal) existingModal.remove();
+
+            const modalContainer = document.createElement("div");
+            modalContainer.id = "dt_modal_container";
+            modalContainer.innerHTML = `
+                <dialog id="dt_modal" class="modal modal-bottom sm:modal-middle">
+                  <div class="modal-box max-w-lg p-0 overflow-hidden bg-white rounded-xl shadow-2xl border border-gray-100">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-5/12 bg-gray-50 p-6 flex items-center justify-center">
+                            <img src="${product.image}" class="max-h-48 object-contain">
+                        </div>
+                        
+                        <div class="md:w-7/12 p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">${product.category}</span>
+                                    <form method="dialog">
+                                        <button class="text-gray-400 hover:text-gray-600 transition-colors">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <h3 class="font-bold text-lg text-gray-800 mb-2 leading-tight line-clamp-2">${product.title}</h3>
+                                
+                                <p class="text-gray-500 text-xs leading-relaxed line-clamp-2 mb-4">
+                                    ${product.description}
+                                </p>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mt-4">
+                                <div>
+                                    <span class="text-gray-400 text-[10px] block mb-1 font-medium">Price</span>
+                                    <p class="text-2xl font-bold text-gray-900">$${product.price}</p>
+                                </div>
+                                <button onclick="addToCart()" class="btn btn-primary btn-md px-6 rounded-lg font-bold shadow-md shadow-blue-100">
+                                    Buy Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                   </div>
+                  <form method="dialog" class="modal-backdrop bg-transparent">
+                    <button>close</button>
+                  </form>
                 </dialog>`;
-            document.body.appendChild(modal);
-            document.getElementById("dt_modal").showModal();
+            
+            document.body.appendChild(modalContainer);
+            const modal = document.getElementById("dt_modal");
+            modal.showModal();
         });
 };
 
